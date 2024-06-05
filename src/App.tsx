@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { toBraille } from "./utils/toBraile";
-import { Textarea } from "@nextui-org/react";
+import { Button, ButtonGroup, Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import AppCss from "./App.module.css";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Typography from "@mui/material/Typography";
 
 function App() {
   const [textNormal, setTextNormal] = useState("");
@@ -85,14 +82,10 @@ function App() {
           alignItems: "center",
         }}
       >
-        <Typography gutterBottom variant="h5" component="div">
-          Imprimir
-        </Typography>
-        <ButtonGroup
-          variant="contained"
-          aria-label="Basic button group"
-          size="small"
-        >
+        <h5 className="flex items-center gap-2 mb-4">
+          <span className="text-2xl">Imprimir</span>
+        </h5>
+        <ButtonGroup>
           <Button onClick={() => printContent("small")}>Pequeño</Button>
           <Button onClick={() => printContent("medium")}>Mediano</Button>
           <Button onClick={() => printContent("large")}>Grande</Button>
