@@ -1,0 +1,43 @@
+name: CI_braile
+
+on:
+  
+  pull_request:
+    paths-ignore:
+      - CHANGELOG.md
+
+    branches:
+      - main
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    name: CI
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+
+      - name: Run tests
+        run: |
+          npm test
+
+  Pull_Request:
+    runs-on: ubuntu-latest
+    
+    steps: 
+      - name: Validate PR name
+        if: github.event_name == 'pull_request'
+        uses: Slashgear/action-check-pr-title@v3.0.0
+        with:
+          regexp: '^(build|ci|docs|feat|fix|perf|refactor|test):+ BRA-[1-9]\d* \w+'
