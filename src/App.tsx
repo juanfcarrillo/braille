@@ -23,6 +23,7 @@ function App() {
           autoComplete='off'
           label="Texto"
           value={textNormal}
+          data-testid="alpha-input"
           onChange={e => setTextNormal(e.target.value)}
           placeholder="Digita algo"
           type='text'
@@ -31,6 +32,7 @@ function App() {
         <Textarea
           id="braille"
           label="Braille"
+          data-testid="braille-output"
           value={braille}
           ref={areaRef}
           placeholder="Texto en Braille"
