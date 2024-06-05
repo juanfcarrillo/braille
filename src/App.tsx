@@ -83,7 +83,6 @@ function App() {
           data-testid="braille-output"
           value={braille}
           placeholder="Texto en Braille"
-          className={AppCss.mirrorContainer}
           classNames={{
             input: "text-3xl",
           }}
@@ -93,6 +92,7 @@ function App() {
           id="braille"
           value={braille}
           ref={areaRef}
+          className={AppCss.mirrorContainer}
           classNames={{
             input: "text-3xl",
           }}
