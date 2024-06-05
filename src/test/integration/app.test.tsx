@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import App from '../../App'
-
+import App from "../../App.tsx"
 // Given
 describe("[Integration] Braille translator", () => {
     // When
