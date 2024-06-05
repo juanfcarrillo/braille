@@ -62,3 +62,15 @@ export const punctuation = {
     "'":  '⠄',
 }
 
+// Reverse mappings for Braille to text
+export const brailleToAlphabet = Object.fromEntries(
+    Object.entries(alphabet).map(([key, value]) => [value, key])
+  );
+  
+  export const brailleToNumbers = Object.fromEntries(
+    Object.entries(numbers).map(([key, value]) => [value, key])
+  );
+  
+  export const brailleToPunctuation = Object.fromEntries(
+    Object.entries(punctuation).map(([key, value]) => [value, key])
+  );
