@@ -3,6 +3,7 @@ import { toBraille } from "./utils/toBraile";
 import { Button, ButtonGroup, Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import AppCss from "./App.module.css";
+import { fromBraille } from "./utils/toSpanish";
 
 function App() {
   const [textNormal, setTextNormal] = useState("");
@@ -82,8 +83,8 @@ function App() {
           data-testid="braille-output"
           value={braille}
           placeholder="Texto en Braille"
+          className={AppCss.mirrorContainer}
           classNames={{
-            input: "text-3xl",
             input: "text-3xl",
           }}
           readOnly
@@ -91,8 +92,6 @@ function App() {
         <Textarea
           id="braille"
           value={braille}
-          ref={areaRef}
-          className={AppCss.mirrorContainer}
           ref={areaRef}
           classNames={{
             input: "text-3xl",
@@ -108,14 +107,10 @@ function App() {
           alignItems: "center",
         }}
       >
-        <Typography gutterBottom variant="h5" component="div">
-          Imprimir
-        </Typography>
-        <ButtonGroup
-          variant="contained"
-          aria-label="Basic button group"
-          size="small"
-        >
+        <h5>
+          <span>Imprimir</span>
+        </h5>
+        <ButtonGroup>
           <Button onClick={() => printContent("small")}>Pequeño</Button>
           <Button onClick={() => printContent("medium")}>Mediano</Button>
           <Button onClick={() => printContent("large")}>Grande</Button>
