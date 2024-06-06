@@ -4,6 +4,9 @@ import { Button, ButtonGroup, Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import AppCss from "./App.module.css";
 // import { fromBraille } from "./utils/toSpanish";
+import "./print.css";
+import { createPortal } from "react-dom";
+import clsx from "clsx";
 
 function App() {
   const [textNormal, setTextNormal] = useState("");
@@ -14,7 +17,11 @@ function App() {
   const [brailleText, setBrailleText] = useState("");
   const [clearText, setClearText] = useState("");
 
+  const [isPrinting, setIsPrinting] = useState(false);
+
   const areaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [fontSize, setFontSize] = useState<"small" | "medium" | "large">("small");
 
   useEffect(() => {
     const brailleText = toBraille(textNormal);
@@ -50,39 +57,35 @@ function App() {
   }
 
 
-  const printContent = (size: "small" | "medium" | "large") => {
-    if (areaRef.current) {
-      const content = areaRef.current.value;
-      const printWindow = window.open("", "_blank");
-      if (printWindow) {
-        let style = "";
-        if (size === "small") {
-          style = "font-size: 20pt;";
-        } else if (size === "medium") {
-          style = "font-size: 24pt;";
-        } else if (size === "large") {
-          style = "font-size: 28pt;";
-        }
-        const additionalStyles = `
-          .mirrorContainer {
-            transform: scale(-1, 1);
-            -ms-transform: scale(-1, 1);
-            -webkit-transform: scale(-1, 1);
-            pointer-events: none;
-            background-color: red;
-          }
-        `;
-        printWindow.document.write(
-          `<html><head><title>Impresión</title><style>pre { ${style} } ${additionalStyles}</style></head><body><pre class="mirrorContainer">${content}</pre></body></html>`
-        );
-        printWindow.document.close();
-        printWindow.print();
-      }
+  useEffect(() => {
+    if (isPrinting && fontSize) {
+      window.print();
+      setIsPrinting(false);
     }
-  };
+  }, [isPrinting, fontSize]);
+
+  function handlePrint(size: "small" | "medium" | "large") {
+    setIsPrinting(true);
+    setFontSize(size);
+  }
 
   return (
     <main className="flex flex-col items-center gap-4 min-h-full h-[100vh] w-[100vw] p-8">
+      {
+        createPortal(
+          <h1 className={clsx({
+              [AppCss.mirrorContainer]: true,
+              "mirror": true,
+              "text-[40px]": fontSize === "small",
+              "text-[60px]": fontSize === "medium",
+              "text-[80px]": fontSize === "large",
+            })
+          }>
+            {braille}
+          </h1>,
+          document.getElementById("print") || document.body
+        )
+      }
       <h1 className="text-2xl">Traductor Español - Braille</h1>
       <section className="flex flex-col w-1/3 gap-4">
         <Input
@@ -108,7 +111,7 @@ function App() {
           readOnly
         />
         <Textarea
-          id="braille"
+          id="mirror-braille"
           value={braille}
           ref={areaRef}
           className={AppCss.mirrorContainer}
@@ -130,9 +133,9 @@ function App() {
           <span>Imprimir</span>
         </h5>
         <ButtonGroup>
-          <Button onClick={() => printContent("small")}>Pequeño</Button>
-          <Button onClick={() => printContent("medium")}>Mediano</Button>
-          <Button onClick={() => printContent("large")}>Grande</Button>
+          <Button onClick={() => handlePrint("small")}>Pequeño</Button>
+          <Button onClick={() => handlePrint("medium")}>Mediano</Button>
+          <Button onClick={() => handlePrint("large")}>Grande</Button>
         </ButtonGroup>
       </section>
       <h1 className="text-2xl">Traductor Braille - Español</h1>
@@ -167,11 +170,6 @@ function App() {
         <h5 className="flex items-center gap-2 mb-4">
           <span className="text-2xl">Imprimir</span>
         </h5>
-        <ButtonGroup>
-          <Button onClick={() => printContent("small")}>Pequeño</Button>
-          <Button onClick={() => printContent("medium")}>Mediano</Button>
-          <Button onClick={() => printContent("large")}>Grande</Button>
-        </ButtonGroup>
       </section>
     </main>
   );
