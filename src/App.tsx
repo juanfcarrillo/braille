@@ -1,15 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { toBraille } from "./utils/toBraile";
 import { Button, ButtonGroup, Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import AppCss from "./App.module.css";
-import { fromBraille } from "./utils/toSpanish";
+// import { fromBraille } from "./utils/toSpanish";
 
 function App() {
   const [textNormal, setTextNormal] = useState("");
   const [braille, setBraille] = useState("");
-  const [textToBraile, setTextToBraile] = useState("");
-  const [wordSpanish, setWordSpanish] = useState("");
+
+  const [brailleInput, setBrailleInput] = useState(" ");
+
+  const [brailleText, setBrailleText] = useState("");
+  const [clearText, setClearText] = useState("");
 
   const areaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -19,15 +22,33 @@ function App() {
   }, [textNormal]);
 
   useEffect(() => {
+    setBrailleInput(brailleText)
+  }, [brailleText]);
 
-    if (textToBraile) {
-      const convertedText = toBraille(textToBraile);
-      const spanishText = fromBraille(convertedText);
-      setWordSpanish(spanishText);
-    } else {
-      setWordSpanish("");
+  useEffect(() => {
+    if (brailleInput.length < clearText.length) {
+      setClearText(prev => prev.slice(0, brailleInput.length));
+      setBrailleText(prev => prev.slice(0, brailleInput.length));
     }
-  }, [textToBraile]);
+  }, [brailleInput.length, clearText.length])
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const { value } = e.target;
+
+    const lastLetter = value.slice(-1);
+
+    if (brailleInput === value) {
+      setBrailleText(prev => prev.slice(0, -1));
+      setClearText(prev => prev.slice(0, -1));
+      return;
+    }
+
+    setBrailleText(prev => `${prev}${toBraille(lastLetter)}`);
+    setClearText(prev => `${prev}${lastLetter}`);
+
+    setBrailleInput(value);
+  }
+
 
   const printContent = (size: "small" | "medium" | "large") => {
     if (areaRef.current) {
@@ -56,8 +77,6 @@ function App() {
         );
         printWindow.document.close();
         printWindow.print();
-      } else {
-        console.error("No se pudo abrir la ventana de impresión.");
       }
     }
   };
@@ -122,25 +141,20 @@ function App() {
           id="text"
           autoComplete="off"
           label="Texto"
-          value={textToBraile}
           data-testid="alpha-input2"
-          onChange={(e) => {
-            setTextToBraile(e.target.value);
-          }}
           placeholder="Digita algo"
-          type="text"
-          variant="faded"
+          onChange={handleChange}
+          value={brailleInput}
         />
         <Textarea
           id="braille"
           label="Braille"
           data-testid="braille-output2"
-          value={wordSpanish}
+          value={clearText}
           placeholder="Texto en Braille"
           classNames={{
             input: "text-3xl",
           }}
-          readOnly
         />
       </section>
       <section
