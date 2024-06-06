@@ -28,7 +28,6 @@ function brailleToCharacter(braille: string, isUpperCase = false) {
 function brailleToWord(brailleWord: { match: (arg0: RegExp) => never[]; }) {
   let isUpperCase = false;
   const characters = brailleWord.match(/.{1,1}/g) || []; // Split into chunks of 1 (Braille characters)
-  console.log("fuction",characters);
   return characters.map((braille: string) => {
     if (braille === UPPER_CASE_PREFIX) {
       isUpperCase = true;
@@ -43,7 +42,5 @@ function brailleToWord(brailleWord: { match: (arg0: RegExp) => never[]; }) {
 
 export function fromBraille(brailleText: any) {
   const words = brailleText.split(' ');
-  console.log(words);
-  console.log("mapeado",words.map(brailleToWord));
   return words.map(brailleToWord).join(' ');
 }
