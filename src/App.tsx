@@ -4,6 +4,8 @@ import { Button, ButtonGroup, Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import AppCss from "./App.module.css";
 import { fromBraille } from "./utils/toSpanish";
+import "./print.css";
+import { createPortal } from "react-dom";
 
 function App() {
   const [textNormal, setTextNormal] = useState("");
@@ -64,6 +66,14 @@ function App() {
 
   return (
     <main className="flex flex-col items-center gap-4 min-h-full h-[100vh] w-[100vw] p-8">
+      {
+        createPortal(
+          <h1 className={`${AppCss.mirrorContainer} mirror`}>
+            {braille}
+          </h1>,
+          document.getElementById("print") || document.body
+        )
+      }
       <h1 className="text-2xl">Traductor Español - Braille</h1>
       <section className="flex flex-col w-1/3 gap-4">
         <Input
@@ -89,7 +99,7 @@ function App() {
           readOnly
         />
         <Textarea
-          id="braille"
+          id="mirror-braille"
           value={braille}
           ref={areaRef}
           className={AppCss.mirrorContainer}
