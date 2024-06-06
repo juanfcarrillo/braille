@@ -14,6 +14,8 @@ function App() {
   const [textToBraile, setTextToBraile] = useState("");
   const [wordSpanish, setWordSpanish] = useState("");
 
+  const [isPrinting, setIsPrinting] = useState(false);
+
   const areaRef = useRef<HTMLTextAreaElement>(null);
 
   const [fontSize, setFontSize] = useState<"small" | "medium" | "large">("small");
@@ -34,21 +36,29 @@ function App() {
     }
   }, [textToBraile]);
 
+  useEffect(() => {
+    if (isPrinting && fontSize) {
+      window.print();
+      setIsPrinting(false);
+    }
+  }, [isPrinting, fontSize]);
+
   function handlePrint(size: "small" | "medium" | "large") {
+    setIsPrinting(true);
     setFontSize(size);
-    window.print();
   }
 
   return (
     <main className="flex flex-col items-center gap-4 min-h-full h-[100vh] w-[100vw] p-8">
       {
         createPortal(
-          <h1 className={clsx(
-            AppCss.mirrorContainer, 
-            "mirror",
-            "text-[20pt]" && fontSize === "small", 
-            "text-[24pt]" && fontSize === "medium",
-            "text-[28pt]" && fontSize === "large")
+          <h1 className={clsx({
+              [AppCss.mirrorContainer]: true,
+              "mirror": true,
+              "text-[40px]": fontSize === "small",
+              "text-[60px]": fontSize === "medium",
+              "text-[80px]": fontSize === "large",
+            })
           }>
             {braille}
           </h1>,
