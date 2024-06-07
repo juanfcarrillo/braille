@@ -1,4 +1,4 @@
-import { NUMERAL_PREFIX, UPPER_CASE_PREFIX, alphabet, numbers, punctuation } from "../../constants/brailleDicctionary";
+import { UPPER_CASE_PREFIX, alphabet, numbers, punctuation } from "../../constants/brailleDicctionary";
 import { toBraille } from "../../utils/toBraile";
 import {it, expect, describe} from "vitest";
 
@@ -26,6 +26,12 @@ describe('Spanish Braille Translator', () => {
     it('translates mixed case words', () => {
         const word = 'Hola';
         const brailleWord = `${UPPER_CASE_PREFIX}${alphabet['h']}${alphabet['o']}${alphabet['l']}${alphabet['a']}`;
+        expect(toBraille(word)).toBe(brailleWord);
+    });
+
+    it('translates mixed alphanumeric words', () => {
+        const word = 'a1b2';
+        const brailleWord = `⠁⠼⠁⠃⠃⠃`;
         expect(toBraille(word)).toBe(brailleWord);
     });
 
