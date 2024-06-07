@@ -32,7 +32,7 @@ function setNumeral(str: string): string {
     
 
 function setNumeralWord(str: string): string {
-    const spacedNumbers = str   .replace(/(\d)/g, '$1&&');
+    const spacedNumbers = str.replace(/(\d+)/g, '$1&&');
     
     const splited = spacedNumbers.split('&&');
 
