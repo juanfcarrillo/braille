@@ -29,6 +29,19 @@ function setNumeral(str: string): string {
 
     return mergedNumbers
 }
+    
+
+function setNumeralWord(str: string): string {
+    const spacedNumbers = str   .replace(/(\d)/g, '$1&&');
+    
+    const splited = spacedNumbers.split('&&');
+
+    console.log({splited})
+
+    const replacedNumbers = splited.map(setNumeral).join('');
+
+    return replacedNumbers;
+}
 
 function characterToBraile(character: string): string {
     if (!isAlphaNumeric(character)) {
@@ -67,7 +80,7 @@ export function toBraille(text: string): string {
             let newWord = word;
 
             if (hasNumbers(word)) {
-                newWord = setNumeral(word);
+                newWord = setNumeralWord(word);
             }
 
             if (newWord === '' || newWord === '') {
