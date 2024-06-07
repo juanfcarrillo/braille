@@ -34,18 +34,19 @@ export const alphabet = {
 };
 
 export const UPPER_CASE_PREFIX = '⠅'
+export const NUMERAL_PREFIX = '⠼'
 
 export const numbers = {
-    '1':  '⠼⠁',
-    '2':  '⠼⠃',
-    '3':  '⠼⠉',
-    '4':  '⠼⠙',
-    '5':  '⠼⠑',
-    '6':  '⠼⠋',
-    '7':  '⠼⠛',
-    '8':  '⠼⠓',
-    '9':  '⠼⠊',
-    '0':  '⠼⠚',
+    '1':  '⠁',
+    '2':  '⠃',
+    '3':  '⠉',
+    '4':  '⠙',
+    '5':  '⠑',
+    '6':  '⠋',
+    '7':  '⠛',
+    '8':  '⠓',
+    '9':  '⠊',
+    '0':  '⠚',
 }
 
 export const punctuation = {
