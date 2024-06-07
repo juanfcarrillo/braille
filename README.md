@@ -1,3 +1,27 @@
+# ¿Cómo correr el proyecto?
+
+## Requerimientos:
+- Node 20
+- NPM
+
+## Instalar dependencias
+```npm i```
+
+## Correr en modo developer
+```npm run dev```
+
+## Correr los test
+```npm run test```
+
+# ¿Cómo colaborar?
+
+- Abrir un PR con la sitaxis: ^(build|ci|docs|feat|fix|perf|refactor|test):+ BRA-[1-9]\d* \w+
+
+EJEMPLO: feat: BRA-XX Hello world
+
+- Esperar que pase el CI
+- Un miembro del staff debe aprobar el PR
+
 # Documento de Requisitos del Sistema (SRS)
 
 ## 1. Introducción
