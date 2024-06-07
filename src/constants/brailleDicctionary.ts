@@ -33,7 +33,7 @@ export const alphabet = {
     'z':  '⠵',
 };
 
-export const UPPER_CASE_PREFIX = '⠠'
+export const UPPER_CASE_PREFIX = '⠅'
 
 export const numbers = {
     '1':  '⠼⠁',
