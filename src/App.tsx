@@ -1,9 +1,18 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { toBraille } from "./utils/toBraile";
-import { Button, ButtonGroup, Textarea } from "@nextui-org/react";
+import {
+  Button,
+  ButtonGroup,
+  Divider,
+  Textarea,
+  Image,
+} from "@nextui-org/react";
+import { createPortal } from "react-dom";
 import { Input } from "@nextui-org/input";
 import AppCss from "./App.module.css";
 import "./print.css";
+import clsx from "clsx";
+import { Github } from "lucide-react";
 
 function App() {
   const [textNormal, setTextNormal] = useState("");
@@ -79,8 +88,22 @@ function App() {
       </div>
       <main className="flex items-center justify-center min-h-full h-[50%] w-[100%] p-8">
         <div className="w-[80%] flex gap-10">
+          {createPortal(
+            <h1
+              className={clsx({
+                [AppCss.mirrorContainer]: true,
+                mirror: true,
+                "text-[40px]": fontSize === "small",
+                "text-[60px]": fontSize === "medium",
+                "text-[80px]": fontSize === "large",
+              })}
+            >
+              {braille}
+            </h1>,
+            document.getElementById("print") || document.body
+          )}
           <section className="flex flex-1 flex-col items-center justify-center w-1/3 gap-4 border-1 rounded-xl shadow-xl border-gray-300">
-            <h1 className="text-2xl">Traductor Español - Braille</h1>
+            <h1 className="text-2xl mt-4">Traductor Español - Braille</h1>
 
             <Input
               id="text"
@@ -92,7 +115,7 @@ function App() {
               placeholder="Digita algo"
               type="text"
               variant="faded"
-              className="w-[90%] border-1 border-gray-300"
+              className="w-[90%] border-1 border-gray-300 rounded-xl"
             />
             <Textarea
               id="braille"
@@ -135,7 +158,7 @@ function App() {
           </section>
 
           <section className="flex flex-1 flex-col items-center w-1/3 gap-4 border-1 rounded-xl shadow-xl border-gray-300">
-            <h1 className="text-2xl">Traductor Braille - Español</h1>
+            <h1 className="text-2xl mt-4">Traductor Braille - Español</h1>
             <Input
               id="text"
               autoComplete="off"
@@ -160,24 +183,50 @@ function App() {
           </section>
         </div>
       </main>
-      <section className="w-[100%] gap-4">
-        <div className="flex-col gap-4 w-[80%] ml-52">
+      <Divider className="my-4" />
+      <section className="flex w-[100%]  justify-center gap-4 ">
+        <div className="flex flex-col items-center gap-4 w-[50%] mb-10">
           <h2 className="text-2xl mb-8">Cómo utilizar</h2>
-          <p className="text-sm text-justify">
+          <p className="text-lg text-justify">
             Para traducir del español al braille, simplemente escriba su texto
-            en español en el campo de entrada y cargue una imagen en braille o
-            use la cámara de su dispositivo para capturarla. El texto braille
-            traducido se mostrará a continuación. Para traducir del Braille al
-            español, cargue o capture una imagen del Braille, o escriba el texto
-            en Braille directamente en el campo de entrada.<br/> El texto traducido
-            al español se mostrará a continuación. Tenga en cuenta que la
-            precisión de la traducción puede variar, ya que depende de la
-            calidad de la imagen o el texto en Braille y de nuestras capacidades
-            de procesamiento del lenguaje. Recomendamos volver a verificar las
-            traducciones para obtener información crítica. Si tiene algún
-            problema o tiene algún comentario, no dude en ponerse en contacto
-            con nuestro equipo de soporte.
+            en español en el campo de entrada. El texto braille traducido se
+            mostrará a continuación. <br />
+            <div className="flex justify-center w-[100%] ">
+              <Image
+                width={300}
+                alt="español a braille"
+                src="/src/images/paso 1.png"
+              />
+            </div>
+            Para traducir del Braille al español, escriba el texto en Braille
+            directamente en el campo de entrada, el texto traducido al español
+            se mostrará a continuación.
+            <div className="flex justify-center w-[100%]">
+              <Image
+                width={300}
+                alt="español a braille"
+                src="/src/images/paso 2.png"
+              />
+            </div>
+            <br /> Recomendamos volver a verificar las traducciones para obtener
+            información crítica. Si tiene algún problema o tiene algún
+            comentario, no dude en ponerse en contacto con nuestro equipo de
+            soporte.
           </p>
+          <div className="flex gap-4">
+          <Button color="success" variant="bordered" startContent={<Github />}>
+            <a href="https://github.com/JhonMeza7">GitHub - Jhon</a>
+          </Button>
+          <Button color="default" variant="bordered" startContent={<Github />}>
+            <a href="https://github.com/Paoisbllxx22">GitHub - Paola</a>
+          </Button>
+          <Button color="success" variant="bordered" startContent={<Github />}>
+            <a href="https://github.com/juanfcarrillo">GitHub - Juan</a>
+          </Button>
+          <Button color="default" variant="bordered" startContent={<Github />}>
+            <a href="https://github.com/CarlosMorales07">GitHub - Carlos</a>
+          </Button>
+          </div>
         </div>
       </section>
     </>
