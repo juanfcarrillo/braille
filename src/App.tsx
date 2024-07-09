@@ -13,6 +13,8 @@ import AppCss from "./App.module.css";
 import "./print.css";
 import clsx from "clsx";
 import { Github } from "lucide-react";
+import imagen1 from "/src/images/paso 1.png"
+import imagen2 from "/src/images/paso 2.png";
 
 function App() {
   const [textNormal, setTextNormal] = useState("");
@@ -29,6 +31,9 @@ function App() {
 
   const [fontSize, setFontSize] = useState<"small" | "medium" | "large">(
     "small"
+  );
+  const [printContent, setPrintContent] = useState<"brailleMirror" | "brailleNormal">(
+    "brailleMirror"
   );
 
   useEffect(() => {
@@ -69,9 +74,13 @@ function App() {
       window.print();
       setIsPrinting(false);
     }
-  }, [isPrinting, fontSize]);
+  }, [isPrinting, fontSize, printContent]);
 
-  function handlePrint(size: "small" | "medium" | "large") {
+  function handlePrint(
+    size: "small" | "medium" | "large",
+    content: "brailleMirror" | "brailleNormal"
+  ) {
+    setPrintContent(content);
     setIsPrinting(true);
     setFontSize(size);
   }
@@ -89,17 +98,29 @@ function App() {
       <main className="flex items-center justify-center min-h-full h-[50%] w-[100%] p-8">
         <div className="w-[80%] flex gap-10">
           {createPortal(
-            <h1
-              className={clsx({
-                [AppCss.mirrorContainer]: true,
-                mirror: true,
-                "text-[40px]": fontSize === "small",
-                "text-[60px]": fontSize === "medium",
-                "text-[80px]": fontSize === "large",
-              })}
-            >
-              {braille}
-            </h1>,
+            printContent === "brailleMirror" ? (
+              <h1
+                className={clsx({
+                  [AppCss.mirrorContainer]: true,
+                  mirror: true,
+                  "text-[40px]": fontSize === "small",
+                  "text-[60px]": fontSize === "medium",
+                  "text-[80px]": fontSize === "large",
+                })}
+              >
+                {braille}
+              </h1>
+            ) : (
+              <h1
+                className={clsx({
+                  "text-[40px]": fontSize === "small",
+                  "text-[60px]": fontSize === "medium",
+                  "text-[80px]": fontSize === "large",
+                })}
+              >
+                {braille}
+              </h1>
+            ),
             document.getElementById("print") || document.body
           )}
           <section className="flex flex-1 flex-col items-center justify-center w-1/3 gap-4 border-1 rounded-xl shadow-xl border-gray-300">
@@ -129,6 +150,18 @@ function App() {
               className=" w-[90%] border-1 border-gray-300 rounded-xl"
               readOnly
             />
+            <ButtonGroup className="mb-8">
+              <Button onClick={() => handlePrint("small", "brailleNormal")}>
+                Pequeño
+              </Button>
+              <Button onClick={() => handlePrint("medium", "brailleNormal")}>
+                Mediano
+              </Button>
+              <Button onClick={() => handlePrint("large", "brailleNormal")}>
+                Grande
+              </Button>
+            </ButtonGroup>
+
             <Textarea
               id="braille"
               value={braille}
@@ -150,9 +183,15 @@ function App() {
                 <span className="text-2xl">Imprimir</span>
               </h5>
               <ButtonGroup className="mb-8">
-                <Button onClick={() => handlePrint("small")}>Pequeño</Button>
-                <Button onClick={() => handlePrint("medium")}>Mediano</Button>
-                <Button onClick={() => handlePrint("large")}>Grande</Button>
+                <Button onClick={() => handlePrint("small", "brailleMirror")}>
+                  Pequeño Braille
+                </Button>
+                <Button onClick={() => handlePrint("medium", "brailleMirror")}>
+                  Mediano Braille
+                </Button>
+                <Button onClick={() => handlePrint("large", "brailleMirror")}>
+                  Grande Braille
+                </Button>
               </ButtonGroup>
             </section>
           </section>
@@ -195,7 +234,7 @@ function App() {
               <Image
                 width={300}
                 alt="español a braille"
-                src="/src/images/paso 1.png"
+                src={imagen1}
               />
             </div>
             Para traducir del Braille al español, escriba el texto en Braille
@@ -205,7 +244,7 @@ function App() {
               <Image
                 width={300}
                 alt="español a braille"
-                src="/src/images/paso 2.png"
+                src={imagen2}
               />
             </div>
             <br /> Recomendamos volver a verificar las traducciones para obtener
@@ -214,18 +253,34 @@ function App() {
             soporte.
           </p>
           <div className="flex gap-4">
-          <Button color="success" variant="bordered" startContent={<Github />}>
-            <a href="https://github.com/JhonMeza7">GitHub - Jhon</a>
-          </Button>
-          <Button color="default" variant="bordered" startContent={<Github />}>
-            <a href="https://github.com/Paoisbllxx22">GitHub - Paola</a>
-          </Button>
-          <Button color="success" variant="bordered" startContent={<Github />}>
-            <a href="https://github.com/juanfcarrillo">GitHub - Juan</a>
-          </Button>
-          <Button color="default" variant="bordered" startContent={<Github />}>
-            <a href="https://github.com/CarlosMorales07">GitHub - Carlos</a>
-          </Button>
+            <Button
+              color="success"
+              variant="bordered"
+              startContent={<Github />}
+            >
+              <a href="https://github.com/JhonMeza7">GitHub - Jhon</a>
+            </Button>
+            <Button
+              color="default"
+              variant="bordered"
+              startContent={<Github />}
+            >
+              <a href="https://github.com/Paoisbllxx22">GitHub - Paola</a>
+            </Button>
+            <Button
+              color="success"
+              variant="bordered"
+              startContent={<Github />}
+            >
+              <a href="https://github.com/juanfcarrillo">GitHub - Juan</a>
+            </Button>
+            <Button
+              color="default"
+              variant="bordered"
+              startContent={<Github />}
+            >
+              <a href="https://github.com/CarlosMorales07">GitHub - Carlos</a>
+            </Button>
           </div>
         </div>
       </section>
