@@ -184,3 +184,4 @@ Las pruebas se realizarán en el siguiente orden:
 ## Conclusión
 
 Este plan de pruebas tiene como objetivo garantizar que el sistema cumpla con todos los requisitos especificados, proporcionando una solución robusta y eficiente para la transcripción de textos entre español y Braille. Se llevará a cabo una serie de pruebas detalladas para validar la funcionalidad, usabilidad, rendimiento y compatibilidad del sistema.
+
