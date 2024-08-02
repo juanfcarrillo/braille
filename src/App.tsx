@@ -15,8 +15,25 @@ import clsx from "clsx"; // Importa la función para manejar clases condicionale
 import { Github } from "lucide-react"; // Importa el icono de GitHub desde Lucide React
 import imagen1 from "/src/images/paso 1.png"; // Importa imagen 1 desde la ruta especificada
 import imagen2 from "/src/images/paso 2.png"; // Importa imagen 2 desde la ruta especificada
+import ToggleButton from "./components/toggleButton";
 
 function App() {
+  //modo oscuro
+  // const [darkMode, setDarkMode] = useState(() => {
+  //   const savedMode = localStorage.getItem('theme');
+  //   return savedMode === 'dark' || (!savedMode && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  // });
+
+  // useEffect(() => {
+  //   if (darkMode) {
+  //     document.documentElement.classList.add('dark');
+  //     localStorage.setItem('theme', 'dark');
+  //   } else {
+  //     document.documentElement.classList.remove('dark');
+  //     localStorage.setItem('theme', 'light');
+  //   }
+  // }, [darkMode]);
+
   // Estados para manejar los datos de la aplicación
   const [textNormal, setTextNormal] = useState(""); // Texto normal en español
   const [braille, setBraille] = useState(""); // Texto braille generado
@@ -97,6 +114,9 @@ function App() {
   return (
     <>
       {/* Encabezado de la aplicación */}
+      <div className="max-w-full flex justify-end mt-4 mr-4">
+        <ToggleButton />
+      </div>
       <div className="flex flex-col w-[100%] items-center justify-center  mt-10 mb-10 gap-4">
         <h1 className="text-3xl uppercase font-bold w-[50%] ">
           Traducción de español a braille y de braille a español
@@ -105,7 +125,6 @@ function App() {
           Easily translate between Spanish and Braille with our intuitive tool.
         </h2>
       </div>
-
       {/* Contenido principal de la aplicación */}
       <main className="flex items-center justify-center min-h-full h-[50%] w-[100%] p-8">
         <div className="w-[80%] flex gap-10">
