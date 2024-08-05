@@ -40,7 +40,7 @@ function brailleToWord(brailleWord: { match: (arg0: RegExp) => never[]; }) {
   }).join('');
 }
 
-export function fromBraille(brailleText: any) {
+export function fromBraille(brailleText) {
   const words = brailleText.split(' ');
   return words.map(brailleToWord).join(' ');
 }
