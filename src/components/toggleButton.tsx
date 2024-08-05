@@ -46,7 +46,7 @@ const ToggleButton = () => {
   const toggleTheme = () => {
     const newMode = !isDarkmode;
     setIsDarkmode(newMode);
-    localStorage.setItem("isDarkmode", newMode);
+    localStorage.setItem("isDarkmode", JSON.stringify(newMode));
   };
 
   const switchTheme = () => {
