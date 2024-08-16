@@ -1,5 +1,7 @@
 import { NUMERAL_PREFIX, UPPER_CASE_PREFIX, alphabet, numbers, punctuation } from "../constants/brailleDicctionary";
 
+const EMPTY_BRAILLE = '☐';
+
 // Función para verificar si una cadena contiene caracteres alfanuméricos
 function isAlphaNumeric(str: string): boolean {
     return /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9]+$/i.test(str);
@@ -49,15 +51,16 @@ function setNumeralWord(str: string): string {
 
 // Función para convertir un carácter individual a su representación en braille
 function characterToBraile(character: string): string {
+    
     if (!isAlphaNumeric(character)) {
-        return punctuation[character as keyof typeof punctuation] || '';  // Devuelve el símbolo de puntuación correspondiente, si existe
+        return punctuation[character as keyof typeof punctuation] || EMPTY_BRAILLE;  // Devuelve el símbolo de puntuación correspondiente, si existe
     }
 
     if (isNumber(character)) {
-        return numbers[character as keyof typeof numbers] || '';  // Devuelve el número en braille, si está definido
+        return numbers[character as keyof typeof numbers] || EMPTY_BRAILLE;  // Devuelve el número en braille, si está definido
     }
 
-    return alphabet[character.toLowerCase() as keyof typeof alphabet] || '';  // Devuelve la letra en braille, convirtiéndola a minúscula primero
+    return alphabet[character.toLowerCase() as keyof typeof alphabet] || EMPTY_BRAILLE;  // Devuelve la letra en braille, convirtiéndola a minúscula primero
 }
 
 // Función para convertir una palabra completa a braille

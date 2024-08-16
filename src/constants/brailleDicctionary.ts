@@ -68,6 +68,15 @@ export const punctuation = {
   ' ': '⠶',  // Espacio
   '-': '⠤',
   "'": '⠄',   // Apóstrofo
+  '(': '⠐⠣',
+  ')': '⠐⠜',
+  '&': '⠸⠯',
+  '∧': '⠈⠩',
+  '@': '⠰⠈⠁⠞',
+  'å': '⠁⠣⠨⠡',
+  '$': '⠈⠎',
+  'π': '⠫⠣⠶',
+  '%': '⠇',
 };
 
 // Mapeo inverso para convertir braille de vuelta a texto
